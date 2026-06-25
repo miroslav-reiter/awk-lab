@@ -1,10 +1,10 @@
-# awk-lab
+# 🧪 awk-lab
 
 Testovací repozitár na praktické trénovanie príkazov `awk`, `mawk` a `gawk` v Ubuntu Linuxe a Kali Linuxe.
 
 Repozitár je určený na precvičenie práce s textom, riadkami, stĺpcami, oddeľovačmi, regulárnymi výrazmi, výpočtami a jednoduchým reportingom priamo v termináli.
 
-## Čo je awk
+## 📌 Čo je awk
 
 `awk` je nástroj a zároveň jednoduchý programovací jazyk na spracovanie textu. Číta vstup po riadkoch, každý riadok rozdelí na polia a nad vybranými riadkami vykoná akciu.
 
@@ -16,7 +16,22 @@ awk 'vzor { akcia }' subor
 
 Ak vzor vynecháme, akcia sa vykoná pre každý riadok. Ak akciu vynecháme, predvolenou akciou je výpis riadku.
 
-## mawk vs gawk
+## 🎯 Na čo sa awk používa v praxi
+
+`awk` používame hlavne pri rýchlom spracovaní textových dát priamo v termináli alebo v shell skriptoch.
+
+Typické použitie:
+
+- výber stĺpcov z textových súborov,
+- spracovanie CSV a TSV súborov,
+- filtrovanie riadkov podľa podmienok,
+- práca s logmi,
+- počítanie súčtov, priemerov, miním a maxím,
+- jednoduché reporty,
+- spracovanie výstupov príkazov ako `ps`, `df`, `du`, `ls`, `ip`, `ss`,
+- rýchle transformácie dát bez potreby Pythonu alebo Excelu.
+
+## 🧩 mawk vs gawk
 
 V Kali Linuxe môže byť príkaz `awk` napojený na `mawk`:
 
@@ -37,9 +52,9 @@ Praktické pravidlo:
 - pri prenositeľných skriptoch používame hlavne POSIX kompatibilnú syntax,
 - GNU rozšírenia používame iba vtedy, keď vieme, že cieľový systém má `gawk`.
 
-## Príprava prostredia
+## ⚙️ Príprava prostredia
 
-### Kali Linux
+### 🐉 Kali Linux
 
 ```bash
 awk
@@ -53,7 +68,7 @@ sudo apt update
 sudo apt install gawk -y
 ```
 
-### Ubuntu Linux
+### 🐧 Ubuntu Linux
 
 ```bash
 awk
@@ -67,7 +82,7 @@ sudo apt update
 sudo apt install gawk -y
 ```
 
-## Štruktúra repozitára
+## 🗂️ Štruktúra repozitára
 
 ```text
 awk-lab/
@@ -97,7 +112,7 @@ awk-lab/
     └── run-all.sh
 ```
 
-## Rýchly štart
+## 🚀 Rýchly štart
 
 ```bash
 git clone https://github.com/miroslav-reiter/awk-lab.git
@@ -110,7 +125,7 @@ Spustenie všetkých ukážkových riešení:
 bash scripts/run-all.sh
 ```
 
-## Základné príkazy
+## 🧾 Základné príkazy
 
 Výpis celých riadkov:
 
@@ -172,7 +187,92 @@ Formátovaný výstup:
 awk -F, 'NR > 1 { printf "%-12s %8.2f\n", $1, $4 }' data/employees.csv
 ```
 
-## Odporúčané poradie tréningu
+## 🧠 AWK cheat sheet
+
+### 📍 Základná syntax
+
+| Použitie | Príkaz |
+|---|---|
+| Výpis všetkých riadkov | `awk '{ print }' subor.txt` |
+| Výpis celého riadku | `awk '{ print $0 }' subor.txt` |
+| Výpis prvého poľa | `awk '{ print $1 }' subor.txt` |
+| Výpis prvého a druhého poľa | `awk '{ print $1, $2 }' subor.txt` |
+| Výpis čísla riadku | `awk '{ print NR, $0 }' subor.txt` |
+| Výpis počtu polí | `awk '{ print NF, $0 }' subor.txt` |
+| Výpis posledného poľa | `awk '{ print $NF }' subor.txt` |
+
+### ✂️ Oddeľovače polí
+
+| Použitie | Príkaz |
+|---|---|
+| CSV súbor | `awk -F, '{ print $1 }' data.csv` |
+| Súbor oddelený dvojbodkou | `awk -F: '{ print $1 }' /etc/passwd` |
+| Nastavenie `FS` v programe | `awk 'BEGIN { FS="," } { print $1 }' data.csv` |
+| Nastavenie výstupného oddeľovača | `awk 'BEGIN { OFS=";" } { print $1, $2 }' data.txt` |
+
+### 🔎 Filtrovanie
+
+| Použitie | Príkaz |
+|---|---|
+| Riadky s hodnotou väčšou ako 100 | `awk '$1 > 100 { print }' cisla.txt` |
+| Riadky od 2. riadku | `awk 'NR > 1 { print }' data.csv` |
+| Riadky 2 až 5 | `awk 'NR >= 2 && NR <= 5 { print }' data.txt` |
+| Text obsahuje výraz | `awk '/error/ { print }' app.log` |
+| Pole sa rovná hodnote | `awk -F, '$2 == "IT" { print }' employees.csv` |
+| Pole sa nerovná hodnote | `awk -F, '$2 != "IT" { print }' employees.csv` |
+
+### 🧮 Výpočty
+
+| Použitie | Príkaz |
+|---|---|
+| Súčet prvého stĺpca | `awk '{ sum += $1 } END { print sum }' cisla.txt` |
+| Priemer prvého stĺpca | `awk '{ sum += $1; n++ } END { print sum / n }' cisla.txt` |
+| Počet riadkov | `awk 'END { print NR }' subor.txt` |
+| Maximum | `awk 'NR == 1 { max=$1 } $1 > max { max=$1 } END { print max }' cisla.txt` |
+| Minimum | `awk 'NR == 1 { min=$1 } $1 < min { min=$1 } END { print min }' cisla.txt` |
+
+### 🧱 BEGIN a END
+
+| Použitie | Príkaz |
+|---|---|
+| Hlavička pred spracovaním | `awk 'BEGIN { print "Start" } { print }' data.txt` |
+| Záver po spracovaní | `awk '{ print } END { print "Hotovo" }' data.txt` |
+| Inicializácia oddeľovača | `awk 'BEGIN { FS="," } NR > 1 { print $1 }' data.csv` |
+
+### 🖨️ Formátovaný výstup
+
+| Použitie | Príkaz |
+|---|---|
+| Zarovnanie textu | `awk '{ printf "%-15s %s\n", $1, $2 }' data.txt` |
+| Číslo na 2 desatinné miesta | `awk '{ printf "%.2f\n", $1 }' cisla.txt` |
+| Tabuľkový report | `awk -F, 'NR>1 { printf "%-12s %8.2f\n", $1, $4 }' employees.csv` |
+
+### 🧰 Užitočné premenné
+
+| Premenná | Význam |
+|---|---|
+| `$0` | celý aktuálny riadok |
+| `$1`, `$2`, `$3` | prvé, druhé, tretie pole |
+| `$NF` | posledné pole v riadku |
+| `NR` | poradové číslo aktuálneho riadku celkovo |
+| `FNR` | poradové číslo riadku v aktuálnom súbore |
+| `NF` | počet polí v aktuálnom riadku |
+| `FS` | vstupný oddeľovač polí |
+| `OFS` | výstupný oddeľovač polí |
+| `RS` | vstupný oddeľovač záznamov |
+| `ORS` | výstupný oddeľovač záznamov |
+| `FILENAME` | aktuálne spracovaný súbor |
+
+### 🧪 Overenie implementácie
+
+| Prostredie | Príkaz |
+|---|---|
+| Kali Linux, mawk | `awk -W version` |
+| Ubuntu Linux, gawk | `awk --version` |
+| Samostatný gawk | `gawk --version` |
+| Cesta k príkazu | `which awk` |
+
+## 🧭 Odporúčané poradie tréningu
 
 1. Prejdeme `exercises/01-basics.md`.
 2. Pokračujeme prácou so stĺpcami a oddeľovačmi.
@@ -181,7 +281,7 @@ awk -F, 'NR > 1 { printf "%-12s %8.2f\n", $1, $4 }' data/employees.csv
 5. Spracujeme logy.
 6. Porovnáme prenositeľné príkazy pre `mawk` a `gawk`.
 
-## Časté chyby
+## ⚠️ Časté chyby
 
 Nesprávne umiestnenie `-F`:
 
@@ -202,6 +302,42 @@ name="Miroslav"
 awk -v name="$name" 'BEGIN { print name }'
 ```
 
-## Poznámka k prenositeľnosti
+## 🔒 Bezpečnostné poznámky
+
+Pri práci s `awk` spracovávame často logy, konfigurácie, používateľské dáta alebo výstupy systémových príkazov. Preto dodržiavame tieto pravidlá:
+
+- Nespúšťame neznáme `awk` skripty z internetu bez kontroly obsahu.
+- Pri spracovaní citlivých logov anonymizujeme IP adresy, používateľské mená, tokeny a e-mailové adresy.
+- Do repozitára neukladáme reálne súbory ako `/etc/passwd`, produkčné logy, API tokeny, heslá alebo výpisy obsahujúce osobné údaje.
+- Pri vkladaní shell premenných do `awk` používame `-v`, nie nebezpečné skladanie príkazov cez reťazce.
+- Vyhýbame sa konštrukciám, ktoré skladajú shell príkazy z používateľského vstupu.
+- Nepoužívame `system()` nad nedôveryhodným vstupom.
+- Pri spracovaní veľkých súborov testujeme príkaz najprv na menšej vzorke dát.
+- Pri prepise súborov najprv zapisujeme do dočasného súboru a až potom nahrádzame pôvodný súbor.
+
+Rizikový príklad:
+
+```bash
+awk -v cmd="$USER_INPUT" 'BEGIN { system(cmd) }'
+```
+
+Bezpečnejší prístup je nepúšťať príkazy z používateľského vstupu vôbec a spracovať vstup ako dáta:
+
+```bash
+awk -v value="$USER_INPUT" 'BEGIN { print value }'
+```
+
+## 🧳 Poznámka k prenositeľnosti
 
 V tomto repozitári sú riešenia písané tak, aby fungovali v `mawk` aj `gawk`, pokiaľ nie je výslovne uvedené inak.
+
+Ak pripravujeme skripty pre viacero Linux distribúcií, držíme sa základnej POSIX kompatibilnej syntaxe. Funkcie špecifické pre GNU awk používame iba vtedy, keď máme istotu, že cieľové prostredie používa `gawk`.
+
+## 📚 Užitočné odkazy a zdroje
+
+- GNU Awk User's Guide: https://www.gnu.org/software/gawk/manual/gawk.html
+- GNU Awk projekt: https://www.gnu.org/software/gawk/
+- POSIX awk špecifikácia: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/awk.html
+- mawk manuál: https://invisible-island.net/mawk/manpage/mawk.html
+- The AWK Programming Language, kniha a zdroje: https://awk.dev/
+- GitHub repozitár GNU awk: https://git.savannah.gnu.org/cgit/gawk.git
