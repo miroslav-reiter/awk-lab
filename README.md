@@ -861,7 +861,18 @@ Ak pripravujeme skripty pre viacero Linux distribúcií, držíme sa základnej 
 
 - GNU Awk User's Guide: https://www.gnu.org/software/gawk/manual/gawk.html
 - GNU Awk projekt: https://www.gnu.org/software/gawk/
+- The Open Group Base Specifications, Issue 8: https://pubs.opengroup.org/onlinepubs/9799919799/
 - POSIX awk špecifikácia: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/awk.html
 - mawk manuál: https://invisible-island.net/mawk/manpage/mawk.html
 - The AWK Programming Language, kniha a zdroje: https://awk.dev/
 - GitHub repozitár GNU awk: https://git.savannah.gnu.org/cgit/gawk.git
+
+### 📖 Odporúčané knihy o AWK
+
+| Kniha | Autori | Prečo je užitočná |
+|---|---|---|
+| The AWK Programming Language, Second Edition | Alfred V. Aho, Brian W. Kernighan, Peter J. Weinberger | Najlepšia hlavná kniha k jazyku AWK od autorov jazyka. Druhé vydanie je aktualizované pre súčasné použitie AWK. |
+| The AWK Programming Language | Alfred V. Aho, Brian W. Kernighan, Peter J. Weinberger | Klasické prvé vydanie z roku 1988. Stále výborné na pochopenie filozofie jazyka. |
+| Effective AWK Programming | Arnold Robbins | Praktická kniha a používateľská príručka pre GNU awk. Vhodná, keď chceme ísť hlbšie do `gawk`. |
+| sed & awk, Second Edition | Dale Dougherty, Arnold Robbins | Praktická kniha pre Unix text processing. Dobrá kombinácia `sed` a `awk` pre shell skripty. |
+| sed and awk Pocket Reference | Arnold Robbins | Stručná príručka do ruky. Vhodná ako rýchly ťahák k syntaxe a bežným konštrukciám. |
