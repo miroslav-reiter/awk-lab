@@ -7,7 +7,9 @@ Repozitár je určený na precvičenie práce s textom, riadkami, stĺpcami, odd
 ## 📌 Čo je awk
 
 `awk` je nástroj a zároveň jednoduchý programovací jazyk na spracovanie textu. Číta vstup po riadkoch, každý riadok rozdelí na polia a nad vybranými riadkami vykoná akciu.
-AWK = Aho, Weinberger, Kernighan. Nie je to skratka typu "Advanced Word Kit", ale priamo iniciály autorov. AWK vznikol v Bell Labs v 70. rokoch. Pôvodná verzia bola napísaná v roku 1977 a neskôr bola dostupná v Unix systémoch. Jazyk bol navrhnutý na pattern scanning and processing, teda na prehľadávanie textu podľa vzorov a spracovanie riadkov, stĺpcov a reportov.
+AWK = Aho, Weinberger, Kernighan. Nie je to skratka typu "Advanced Word Kit", ale priamo iniciály autorov. 
+
+AWK vznikol v Bell Labs v 70. rokoch. Pôvodná verzia bola napísaná v roku 1977 a neskôr bola dostupná v Unix systémoch. Jazyk bol navrhnutý na pattern scanning and processing, teda na prehľadávanie textu podľa vzorov a spracovanie riadkov, stĺpcov a reportov.
 
 Základný tvar príkazu:
 
