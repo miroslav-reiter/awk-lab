@@ -187,6 +187,156 @@ Formátovaný výstup:
 awk -F, 'NR > 1 { printf "%-12s %8.2f\n", $1, $4 }' data/employees.csv
 ```
 
+## 🎬 Praktické príklady vo videu
+
+Táto sekcia obsahuje príkazy vhodné na ukážku vo videu. Niektoré príklady používajú všeobecné súbory ako `subor.txt` a `cisla.txt`, iné používajú systémový súbor `/etc/passwd`. Pri tréningu v tomto repozitári môžeme namiesto `/etc/passwd` bezpečne použiť `data/passwd.sample`.
+
+### 1. Výpis celého súboru
+
+```bash
+awk '{ print }' subor.txt
+```
+
+Príkaz vypíše každý riadok vstupného súboru. Ak nepoužijeme žiadnu podmienku, akcia `{ print }` sa vykoná pre každý riadok.
+
+Alternatíva v tomto repozitári:
+
+```bash
+awk '{ print }' data/employees.csv
+```
+
+### 2. Výpis prvého stĺpca
+
+```bash
+awk '{ print $1 }' subor.txt
+```
+
+`$1` znamená prvé pole aktuálneho riadku. Predvolený oddeľovač polí je medzera alebo tabulátor.
+
+Alternatíva v tomto repozitári:
+
+```bash
+awk '{ print $1 }' data/processes.txt
+```
+
+### 3. Výpis používateľských mien z `/etc/passwd`
+
+```bash
+awk -F: '{ print $1 }' /etc/passwd
+```
+
+Prepínač `-F:` nastaví dvojbodku ako oddeľovač polí. Súbor `/etc/passwd` používa dvojbodku medzi poľami, preto `$1` predstavuje používateľské meno.
+
+Bezpečná tréningová alternatíva:
+
+```bash
+awk -F: '{ print $1 }' data/passwd.sample
+```
+
+### 4. Výpis používateľa, UID a shellu
+
+```bash
+awk -F: '{ print $1, $3, $7 }' /etc/passwd
+```
+
+Príkaz vypíše prvé, tretie a siedme pole. V súbore `/etc/passwd` to zvyčajne znamená používateľské meno, UID a prihlasovací shell.
+
+Bezpečná tréningová alternatíva:
+
+```bash
+awk -F: '{ print $1, $3, $7 }' data/passwd.sample
+```
+
+### 5. Výpis prvých 5 riadkov s číslom riadku
+
+```bash
+awk 'NR <= 5 { print NR, $0 }' /etc/passwd
+```
+
+`NR` je poradové číslo aktuálneho riadku. `$0` znamená celý aktuálny riadok. Podmienka `NR <= 5` obmedzí výstup na prvých päť riadkov.
+
+Bezpečná tréningová alternatíva:
+
+```bash
+awk 'NR <= 5 { print NR, $0 }' data/passwd.sample
+```
+
+### 6. Výpis bežných používateľov podľa UID
+
+```bash
+awk -F: '$3 >= 1000 { print $1, $3 }' /etc/passwd
+```
+
+Tretie pole v `/etc/passwd` je UID. Podmienka `$3 >= 1000` často vyberie bežných používateľov, nie systémové účty. Toto pravidlo sa môže medzi distribúciami líšiť.
+
+Bezpečná tréningová alternatíva:
+
+```bash
+awk -F: '$3 >= 1000 { print $1, $3 }' data/passwd.sample
+```
+
+### 7. Výpis používateľov s bash shellom
+
+```bash
+awk -F: '/bash/ { print $1, $7 }' /etc/passwd
+```
+
+Regulárny výraz `/bash/` vyberie iba riadky, ktoré obsahujú text `bash`. Následne vypíšeme používateľské meno a shell.
+
+Bezpečná tréningová alternatíva:
+
+```bash
+awk -F: '/bash/ { print $1, $7 }' data/passwd.sample
+```
+
+### 8. Súčet čísel v súbore
+
+```bash
+awk '{ suma += $1 } END { print suma }' cisla.txt
+```
+
+Premenná `suma` sa postupne navyšuje o hodnotu prvého poľa. Blok `END` sa vykoná až po spracovaní celého vstupu.
+
+Alternatíva v tomto repozitári:
+
+```bash
+awk '{ suma += $1 } END { print suma }' data/scores.txt
+```
+
+### 9. Priemer čísel v súbore
+
+```bash
+awk '{ suma += $1; pocet++ } END { print suma / pocet }' cisla.txt
+```
+
+Pri každom riadku pripočítame hodnotu do premennej `suma` a zvýšime počítadlo `pocet`. Na konci vypočítame priemer ako `suma / pocet`.
+
+Alternatíva v tomto repozitári:
+
+```bash
+awk '{ suma += $1; pocet++ } END { print suma / pocet }' data/scores.txt
+```
+
+### 10. Chybný príklad s `BEGIN` a `-F`
+
+```bash
+awk 'BEGIN { print "Pouzivatelia:" } -F: { print $1 }' /etc/passwd
+```
+
+Tento zápis je chybný, pretože prepínač `-F:` patrí pred awk program, nie dovnútra programu medzi pravidlá. V tejto podobe sa `-F:` nespracuje ako nastavenie oddeľovača polí.
+
+Správny zápis:
+
+```bash
+awk -F: 'BEGIN { print "Pouzivatelia:" } { print $1 }' /etc/passwd
+```
+
+Bezpečná tréningová alternatíva:
+
+```bash
+awk -F: 'BEGIN { print "Pouzivatelia:" } { print $1 }' data/passwd.sample
+```
+
 ## 🧠 AWK cheat sheet
 
 ### 📍 Základná syntax
