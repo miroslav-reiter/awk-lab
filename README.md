@@ -52,6 +52,136 @@ Praktické pravidlo:
 - pri prenositeľných skriptoch používame hlavne POSIX kompatibilnú syntax,
 - GNU rozšírenia používame iba vtedy, keď vieme, že cieľový systém má `gawk`.
 
+## 🪟 AWK pod Microsoft Windows
+
+`awk` sa dá používať aj vo Windows, ale Windows ho štandardne neposkytuje ako bežný natívny príkaz v CMD alebo PowerShelli. V praxi preto používame prostredie, ktoré do Windows doplní Unix/Linux nástroje.
+
+Najčastejšie možnosti:
+
+| Možnosť | Vhodné použitie | Poznámka |
+|---|---|---|
+| WSL | Linuxové príkazy vo Windows | Najbližšie k Ubuntu alebo Kali Linuxu. Odporúčaná voľba pre tento kurz. |
+| Cygwin | Unix-like prostredie priamo vo Windows | Vhodné, keď nechceme alebo nemôžeme použiť WSL. Má vlastné cesty typu `/cygdrive/c`. |
+| Git Bash | Jednoduché používanie Unix nástrojov | Praktické pri Git workflow, ale nie je to plnohodnotné Linux prostredie. |
+| MSYS2 | Vývojárske GNU prostredie | Vhodné pre vývojárov, balíčky a nástroje podobné Linuxu. |
+| Natívny gawk pre Windows | Samostatný program bez Linux prostredia | Použiteľné, ale menej vhodné pre školenia zamerané na Linux. |
+
+### ✅ Odporúčanie pre tento kurz
+
+Pre školenie alebo video o `awk`, `mawk` a `gawk` odporúčame vo Windows používať hlavne **WSL s Ubuntu**. Dôvod je jednoduchý: príkazy, cesty a správanie budú veľmi podobné reálnemu Linuxu.
+
+Príklad z PowerShellu:
+
+```powershell
+wsl
+```
+
+Potom vo WSL Ubuntu:
+
+```bash
+awk --version
+awk '{ print $1 }' data/scores.txt
+awk -F, '{ print $1, $4 }' data/employees.csv
+```
+
+Príkaz môžeme spustiť aj priamo z PowerShellu cez `wsl`:
+
+```powershell
+wsl awk --version
+wsl awk '{ print $1 }' data/scores.txt
+```
+
+### 🧰 Cygwin
+
+Cygwin poskytuje vo Windows Unix-like/POSIX prostredie. Po inštalácii Cygwinu môžeme doinštalovať balík `gawk` a používať `awk` podobne ako v Linux termináli.
+
+Typické overenie v Cygwin termináli:
+
+```bash
+awk --version
+gawk --version
+awk '{ print $1 }' subor.txt
+awk -F, '{ print $1, $3 }' data.csv
+```
+
+Dôležitý rozdiel sú cesty. Windows disk `C:` je v Cygwine dostupný typicky cez `/cygdrive/c`:
+
+```bash
+cd /cygdrive/c/Users/miros/Desktop
+awk '{ print $1 }' subor.txt
+```
+
+Výhody Cygwinu:
+
+- funguje priamo vo Windows,
+- podporuje nástroje ako `awk`, `gawk`, `sed`, `grep`, `bash`, `find`, `sort`, `uniq`,
+- je vhodný pre skripty, ktoré očakávajú Unix-like prostredie,
+- nevyžaduje plnú Linux distribúciu ako WSL.
+
+Nevýhody Cygwinu:
+
+- nie je to skutočný Linux,
+- niektoré systémové príkazy sa môžu správať inak ako v Ubuntu alebo Kali,
+- používa vlastnú adresárovú štruktúru,
+- pri kurze zameranom na Linux môže začiatočníkov mýliť rozdielmi v cestách.
+
+### 🧪 Git Bash
+
+Git Bash je súčasťou Git for Windows. Často obsahuje základné Unix nástroje vrátane `awk`.
+
+Overenie:
+
+```bash
+awk --version
+awk '{ print $1 }' subor.txt
+```
+
+Git Bash je vhodný na jednoduché ukážky a prácu s textovými súbormi. Nie je však plnohodnotná náhrada Linuxu. Pri práci s cestami môžeme naraziť na rozdiely medzi Windows a Unix zápisom.
+
+### 🧱 MSYS2
+
+MSYS2 je vývojárske prostredie pre Windows s balíčkovacím systémom. Vie poskytnúť GNU nástroje vrátane `gawk`.
+
+Typické použitie:
+
+```bash
+gawk --version
+awk -F, '{ print $1, $2 }' data.csv
+```
+
+MSYS2 je vhodné skôr pre vývojárov a technickejších používateľov. Pre začiatočnícke školenie je jednoduchšie odporučiť WSL.
+
+### 🧾 Natívny gawk pre Windows
+
+Existujú aj natívne porty `gawk` pre Windows. Výhoda je, že nepotrebujeme samostatné Linux-like prostredie. Nevýhoda je, že inštalácia, cesty a správanie sa môžu líšiť od Linuxu.
+
+Pre tento kurz je preto lepšie používať WSL, prípadne Cygwin alebo Git Bash ako doplnkové možnosti.
+
+### ⚠️ Rozdiely oproti Linuxu
+
+Pri používaní `awk` vo Windows dávame pozor najmä na tieto rozdiely:
+
+| Oblasť | Windows | Linux/Unix |
+|---|---|---|
+| Cesty | `C:\Users\miros\subor.txt` | `/home/miros/subor.txt` |
+| Cygwin cesta na disk C | `/cygdrive/c/...` | nepoužíva sa |
+| WSL cesta na disk C | `/mnt/c/...` | nepoužíva sa |
+| Konce riadkov | často CRLF | často LF |
+| Shell | PowerShell, CMD, Git Bash, Cygwin Bash | Bash, Zsh, Dash |
+| Quoting | môže sa líšiť podľa shellu | stabilné v Bash ukážkach |
+
+Pri problémoch s koncami riadkov môžeme súbor skonvertovať napríklad nástrojom `dos2unix`, ak je dostupný:
+
+```bash
+dos2unix subor.txt
+```
+
+### 📌 Odporúčaná formulácia do videa
+
+```text
+Vo Windows sa dá awk používať viacerými spôsobmi. Pre tento kurz odporúčam WSL s Ubuntu, pretože sa správa najviac ako Linux. Cygwin, Git Bash a MSYS2 sú použiteľné alternatívy, ale môžu sa líšiť v cestách, shelli a dostupných nástrojoch.
+```
+
 ## ⚙️ Príprava prostredia
 
 ### 🐉 Kali Linux
