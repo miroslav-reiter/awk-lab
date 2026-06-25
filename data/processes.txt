@@ -1,0 +1,8 @@
+USER PID CPU MEM COMMAND
+root 1 0.1 0.5 systemd
+miros 1200 3.5 2.1 firefox
+miros 1210 1.2 1.4 code
+root 900 0.4 0.8 sshd
+postgres 1500 2.8 3.2 postgres
+www-data 1700 4.1 1.1 nginx
+miros 1800 0.6 0.7 bash
