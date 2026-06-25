@@ -52,258 +52,6 @@ Praktické pravidlo:
 - pri prenositeľných skriptoch používame hlavne POSIX kompatibilnú syntax,
 - GNU rozšírenia používame iba vtedy, keď vieme, že cieľový systém má `gawk`.
 
-## 🖥️ Výstupy awk, mawk a gawk v Kali a Ubuntu
-
-Táto sekcia zachytáva reálne výstupy z terminálu pri spustení príkazov bez argumentov. V praxi je to dobrý spôsob, ako rýchlo zistiť, ktorá implementácia awk je v systéme dostupná a aké prepínače podporuje.
-
-### 🐉 Kali Linux: `awk` ako `mawk`
-
-```text
-┌──(miros㉿MSI-Lektor)-[~]
-└─$ awk
-Usage: mawk [Options] [Program] [file ...]
-
-Program:
-    The -f option value is the name of a file containing program text.
-    If no -f option is given, a "--" ends option processing; the following
-    parameters are the program text.
-
-Options:
-    -f program-file  Program  text is read from file instead of from the
-                     command-line.  Multiple -f options are accepted.
-    -F value         sets the field separator, FS, to value.
-    -v var=value     assigns value to program variable var.
-    --               unambiguous end of options.
-
-    Implementation-specific options are prefixed with "-W".  They can be
-    abbreviated:
-
-    -W version       show version information and exit.
-    -W compat        pre-POSIX 2001.
-    -W dump          show assembler-like listing of program and exit.
-    -W help          show this message and exit.
-    -W interactive   set unbuffered output, line-buffered input.
-    -W exec file     use file as program as well as last option.
-    -W posix         stricter POSIX checking.
-    -W random=number set initial random seed.
-    -W sprintf=number adjust size of sprintf buffer.
-    -W usage         show this message and exit.
-```
-
-Z výpisu vidíme, že príkaz `awk` v tomto Kali Linuxe spúšťa `mawk`. Základné prepínače `-f`, `-F`, `-v` a `--` sú prenositeľné a používame ich aj v POSIX kompatibilných awk skriptoch.
-
-### 🐧 Ubuntu Linux: `awk` ako GNU awk
-
-```text
-miros@MSI-Lektor:~$ awk
-Usage: awk [POSIX or GNU style options] -f progfile [--] file ...
-Usage: awk [POSIX or GNU style options] [--] 'program' file ...
-POSIX options:          GNU long options: (standard)
-        -f progfile             --file=progfile
-        -F fs                   --field-separator=fs
-        -v var=val              --assign=var=val
-Short options:          GNU long options: (extensions)
-        -b                      --characters-as-bytes
-        -c                      --traditional
-        -C                      --copyright
-        -d[file]                --dump-variables[=file]
-        -D[file]                --debug[=file]
-        -e 'program-text'       --source='program-text'
-        -E file                 --exec=file
-        -g                      --gen-pot
-        -h                      --help
-        -i includefile          --include=includefile
-        -l library              --load=library
-        -L[fatal|invalid|no-ext]        --lint[=fatal|invalid|no-ext]
-        -M                      --bignum
-        -N                      --use-lc-numeric
-        -n                      --non-decimal-data
-        -o[file]                --pretty-print[=file]
-        -O                      --optimize
-        -p[file]                --profile[=file]
-        -P                      --posix
-        -r                      --re-interval
-        -s                      --no-optimize
-        -S                      --sandbox
-        -t                      --lint-old
-        -V                      --version
-
-To report bugs, see node `Bugs' in `gawk.info'
-which is section `Reporting Problems and Bugs' in the
-printed version.  This same information may be found at
-https://www.gnu.org/software/gawk/manual/html_node/Bugs.html.
-PLEASE do NOT try to report bugs by posting in comp.lang.awk,
-or by using a web forum such as Stack Overflow.
-
-gawk is a pattern scanning and processing language.
-By default it reads standard input and writes standard output.
-
-Examples:
-        awk '{ sum += $1 }; END { print sum }' file
-        awk -F: '{ print $1 }' /etc/passwd
-```
-
-Z výpisu vidíme, že Ubuntu používa GNU awk funkcie. Príkaz sa volá `awk`, ale podporuje GNU prepínače typické pre `gawk`.
-
-### 🐧 Ubuntu Linux: samostatný príkaz `mawk`
-
-```text
-miros@MSI-Lektor:~$ mawk
-Usage: mawk [Options] [Program] [file ...]
-
-Program:
-    The -f option value is the name of a file containing program text.
-    If no -f option is given, a "--" ends option processing; the following
-    parameters are the program text.
-
-Options:
-    -f program-file  Program  text is read from file instead of from the
-                     command-line.  Multiple -f options are accepted.
-    -F value         sets the field separator, FS, to value.
-    -v var=value     assigns value to program variable var.
-    --               unambiguous end of options.
-
-    Implementation-specific options are prefixed with "-W".  They can be
-    abbreviated:
-
-    -W version       show version information and exit.
-    -W dump          show assembler-like listing of program and exit.
-    -W help          show this message and exit.
-    -W interactive   set unbuffered output, line-buffered input.
-    -W exec file     use file as program as well as last option.
-    -W random=number set initial random seed.
-    -W sprintf=number adjust size of sprintf buffer.
-    -W posix_space   do not consider "\n" a space.
-    -W usage         show this message and exit.
-```
-
-Tento výpis ukazuje, že na Ubuntu môže byť popri `gawk` dostupný aj samostatný príkaz `mawk`.
-
-### 🐧 Ubuntu Linux: samostatný príkaz `gawk`
-
-```text
-miros@MSI-Lektor:~$ gawk
-Usage: gawk [POSIX or GNU style options] -f progfile [--] file ...
-Usage: gawk [POSIX or GNU style options] [--] 'program' file ...
-POSIX options:          GNU long options: (standard)
-        -f progfile             --file=progfile
-        -F fs                   --field-separator=fs
-        -v var=val              --assign=var=val
-Short options:          GNU long options: (extensions)
-        -b                      --characters-as-bytes
-        -c                      --traditional
-        -C                      --copyright
-        -d[file]                --dump-variables[=file]
-        -D[file]                --debug[=file]
-        -e 'program-text'       --source='program-text'
-        -E file                 --exec=file
-        -g                      --gen-pot
-        -h                      --help
-        -i includefile          --include=includefile
-        -l library              --load=library
-        -L[fatal|invalid|no-ext]        --lint[=fatal|invalid|no-ext]
-        -M                      --bignum
-        -N                      --use-lc-numeric
-        -n                      --non-decimal-data
-        -o[file]                --pretty-print[=file]
-        -O                      --optimize
-        -p[file]                --profile[=file]
-        -P                      --posix
-        -r                      --re-interval
-        -s                      --no-optimize
-        -S                      --sandbox
-        -t                      --lint-old
-        -V                      --version
-
-To report bugs, see node `Bugs' in `gawk.info'
-which is section `Reporting Problems and Bugs' in the
-printed version.  This same information may be found at
-https://www.gnu.org/software/gawk/manual/html_node/Bugs.html.
-PLEASE do NOT try to report bugs by posting in comp.lang.awk,
-or by using a web forum such as Stack Overflow.
-
-gawk is a pattern scanning and processing language.
-By default it reads standard input and writes standard output.
-
-Examples:
-        gawk '{ sum += $1 }; END { print sum }' file
-        gawk -F: '{ print $1 }' /etc/passwd
-```
-
-Tento výpis je prakticky rovnaký ako pri `awk` v Ubuntu, len príkaz je explicitne `gawk`.
-
-### 📋 Vysvetlenie základných POSIX prepínačov
-
-| Prepínač | Použitie | Vysvetlenie |
-|---|---|---|
-| `-f program-file` | `awk -f skript.awk data.txt` | Program awk sa nenačíta z príkazového riadka, ale zo súboru. Vhodné pre dlhšie skripty. |
-| `-F value` | `awk -F: '{ print $1 }' /etc/passwd` | Nastaví vstupný oddeľovač polí `FS`. Často používame `-F,` pre CSV alebo `-F:` pre `/etc/passwd`. |
-| `-v var=value` | `awk -v limit=100 '$1 > limit { print }' data.txt` | Odovzdá hodnotu do awk premennej ešte pred spustením programu, teda aj pred blokom `BEGIN`. |
-| `--` | `awk -- '{ print }' subor.txt` | Jednoznačne ukončí spracovanie prepínačov. Hodí sa pri názvoch súborov alebo programoch, ktoré by mohli začínať znakom `-`. |
-
-### 📋 Vysvetlenie `mawk` prepínačov `-W`
-
-| Prepínač | Význam | Poznámka |
-|---|---|---|
-| `-W version` | Zobrazí verziu `mawk` a skončí. | Používame na overenie, že `awk` je v systéme napojený na `mawk`. |
-| `-W compat` | Zapne správanie kompatibilné so starším awk pred POSIX 2001. | Vhodné iba pri starších skriptoch. Bežne ho nepoužívame. |
-| `-W dump` | Vypíše internú assembler-like reprezentáciu programu a skončí. | Diagnostická voľba, nie bežný tréningový prepínač. |
-| `-W help` | Zobrazí pomocníka. | Podobné ako výpis po spustení bez programu. |
-| `-W interactive` | Nastaví nebufferovaný výstup a riadkovo bufferovaný vstup. | Vhodné pri interaktívnom spracovaní alebo pipe scenároch. |
-| `-W exec file` | Použije súbor ako awk program a zároveň ukončí spracovanie ďalších možností. | Praktické pri spustiteľných awk skriptoch. |
-| `-W posix` | Zapne prísnejšiu POSIX kontrolu. | Vhodné pri testovaní prenositeľnosti skriptov. |
-| `-W random=number` | Nastaví počiatočné semienko generátora náhodných čísel. | Ovplyvňuje funkcie pracujúce s náhodnosťou, napríklad `rand()`. |
-| `-W sprintf=number` | Upraví veľkosť bufferu pre `sprintf`. | Špecifické pre `mawk`; rieši špeciálne prípady formátovania dlhších reťazcov. |
-| `-W posix_space` | Nepovažuje znak nového riadku `\n` za medzeru. | Vo výpise sa objavuje v Ubuntu pri samostatnom `mawk`. |
-| `-W usage` | Zobrazí stručný návod na použitie. | Alternatíva k pomocnému výpisu. |
-
-### 📋 Vysvetlenie `gawk` prepínačov
-
-| Krátky tvar | Dlhý tvar | Vysvetlenie |
-|---|---|---|
-| `-f progfile` | `--file=progfile` | Načíta awk program zo súboru. |
-| `-F fs` | `--field-separator=fs` | Nastaví vstupný oddeľovač polí `FS`. |
-| `-v var=val` | `--assign=var=val` | Nastaví awk premennú pred spustením programu. |
-| `-b` | `--characters-as-bytes` | Spracováva znaky ako bajty, čo môže byť užitočné pri binárnych alebo špecificky kódovaných dátach. |
-| `-c` | `--traditional` | Zapne tradičný režim kompatibility a potláča niektoré GNU rozšírenia. |
-| `-C` | `--copyright` | Zobrazí informácie o autorských právach a skončí. |
-| `-d[file]` | `--dump-variables[=file]` | Vypíše premenné programu, voliteľne do súboru. Užitočné pri diagnostike. |
-| `-D[file]` | `--debug[=file]` | Spustí alebo pripraví debugger pre awk program. |
-| `-e 'program-text'` | `--source='program-text'` | Zadá awk program priamo ako text. Umožňuje kombinovať viac zdrojov programu. |
-| `-E file` | `--exec=file` | Načíta program zo súboru a ukončí spracovanie ďalších prepínačov. Vhodné pre spustiteľné skripty. |
-| `-g` | `--gen-pot` | Vygeneruje POT súbor pre lokalizáciu textov. |
-| `-h` | `--help` | Zobrazí pomocníka a skončí. |
-| `-i includefile` | `--include=includefile` | Vloží ďalší awk zdrojový súbor. GNU rozšírenie vhodné pre väčšie projekty. |
-| `-l library` | `--load=library` | Načíta dynamickú knižnicu alebo rozšírenie. GNU rozšírenie. |
-| `-L[fatal|invalid|no-ext]` | `--lint[=fatal|invalid|no-ext]` | Zapne kontrolu problematických alebo neprenositeľných konštrukcií. `fatal` zmení varovania na chyby. |
-| `-M` | `--bignum` | Zapne podporu veľkých čísel a vyššej presnosti, ak je dostupná. |
-| `-N` | `--use-lc-numeric` | Použije lokálne nastavenie čísel, napríklad desatinnú čiarku podľa locale. |
-| `-n` | `--non-decimal-data` | Umožní interpretovať nedesiatkové číselné dáta. |
-| `-o[file]` | `--pretty-print[=file]` | Vypíše pekne formátovanú verziu awk programu. |
-| `-O` | `--optimize` | Zapne optimalizácie programu. |
-| `-p[file]` | `--profile[=file]` | Vygeneruje profil behu programu, voliteľne do súboru. |
-| `-P` | `--posix` | Zapne POSIX režim a obmedzí GNU rozšírenia. Vhodné pri testovaní prenositeľnosti. |
-| `-r` | `--re-interval` | Zapne intervalové regulárne výrazy. V novších awk implementáciách je často už bežné správanie. |
-| `-s` | `--no-optimize` | Vypne optimalizácie. Užitočné pri ladení alebo porovnávaní správania. |
-| `-S` | `--sandbox` | Zapne sandbox režim. Obmedzuje vybrané operácie so súbormi, pipe a koprocesmi. |
-| `-t` | `--lint-old` | Upozorňuje na konštrukcie, ktoré neboli dostupné v pôvodných starších awk implementáciách. |
-| `-V` | `--version` | Zobrazí verziu `gawk` a skončí. |
-
-### 🧭 Ktoré prepínače používame najčastejšie
-
-Pri bežnej práci vo videu používame hlavne tieto prepínače:
-
-```bash
-awk -F: '{ print $1 }' /etc/passwd
-awk -F, '{ print $1, $4 }' data/employees.csv
-awk -v limit=3000 -F, '$4 >= limit { print $1, $4 }' data/employees.csv
-awk -f script.awk data.txt
-awk --version
-awk -W version
-```
-
-Na začiatok stačí prakticky ovládať `-F`, `-v`, `-f`, `--version` a `-W version`. Ostatné prepínače riešime až pri ladení, kompatibilite, profilovaní alebo špecifických GNU rozšíreniach.
-
 ## ⚙️ Príprava prostredia
 
 ### 🐉 Kali Linux
@@ -588,6 +336,258 @@ Bezpečná tréningová alternatíva:
 ```bash
 awk -F: 'BEGIN { print "Pouzivatelia:" } { print $1 }' data/passwd.sample
 ```
+
+## 🖥️ Výstupy awk, mawk a gawk v Kali a Ubuntu
+
+Táto sekcia zachytáva reálne výstupy z terminálu pri spustení príkazov bez argumentov. V praxi je to dobrý spôsob, ako rýchlo zistiť, ktorá implementácia awk je v systéme dostupná a aké prepínače podporuje.
+
+### 🐉 Kali Linux: `awk` ako `mawk`
+
+```text
+┌──(miros㉿MSI-Lektor)-[~]
+└─$ awk
+Usage: mawk [Options] [Program] [file ...]
+
+Program:
+    The -f option value is the name of a file containing program text.
+    If no -f option is given, a "--" ends option processing; the following
+    parameters are the program text.
+
+Options:
+    -f program-file  Program  text is read from file instead of from the
+                     command-line.  Multiple -f options are accepted.
+    -F value         sets the field separator, FS, to value.
+    -v var=value     assigns value to program variable var.
+    --               unambiguous end of options.
+
+    Implementation-specific options are prefixed with "-W".  They can be
+    abbreviated:
+
+    -W version       show version information and exit.
+    -W compat        pre-POSIX 2001.
+    -W dump          show assembler-like listing of program and exit.
+    -W help          show this message and exit.
+    -W interactive   set unbuffered output, line-buffered input.
+    -W exec file     use file as program as well as last option.
+    -W posix         stricter POSIX checking.
+    -W random=number set initial random seed.
+    -W sprintf=number adjust size of sprintf buffer.
+    -W usage         show this message and exit.
+```
+
+Z výpisu vidíme, že príkaz `awk` v tomto Kali Linuxe spúšťa `mawk`. Základné prepínače `-f`, `-F`, `-v` a `--` sú prenositeľné a používame ich aj v POSIX kompatibilných awk skriptoch.
+
+### 🐧 Ubuntu Linux: `awk` ako GNU awk
+
+```text
+miros@MSI-Lektor:~$ awk
+Usage: awk [POSIX or GNU style options] -f progfile [--] file ...
+Usage: awk [POSIX or GNU style options] [--] 'program' file ...
+POSIX options:          GNU long options: (standard)
+        -f progfile             --file=progfile
+        -F fs                   --field-separator=fs
+        -v var=val              --assign=var=val
+Short options:          GNU long options: (extensions)
+        -b                      --characters-as-bytes
+        -c                      --traditional
+        -C                      --copyright
+        -d[file]                --dump-variables[=file]
+        -D[file]                --debug[=file]
+        -e 'program-text'       --source='program-text'
+        -E file                 --exec=file
+        -g                      --gen-pot
+        -h                      --help
+        -i includefile          --include=includefile
+        -l library              --load=library
+        -L[fatal|invalid|no-ext]        --lint[=fatal|invalid|no-ext]
+        -M                      --bignum
+        -N                      --use-lc-numeric
+        -n                      --non-decimal-data
+        -o[file]                --pretty-print[=file]
+        -O                      --optimize
+        -p[file]                --profile[=file]
+        -P                      --posix
+        -r                      --re-interval
+        -s                      --no-optimize
+        -S                      --sandbox
+        -t                      --lint-old
+        -V                      --version
+
+To report bugs, see node `Bugs' in `gawk.info'
+which is section `Reporting Problems and Bugs' in the
+printed version.  This same information may be found at
+https://www.gnu.org/software/gawk/manual/html_node/Bugs.html.
+PLEASE do NOT try to report bugs by posting in comp.lang.awk,
+or by using a web forum such as Stack Overflow.
+
+gawk is a pattern scanning and processing language.
+By default it reads standard input and writes standard output.
+
+Examples:
+        awk '{ sum += $1 }; END { print sum }' file
+        awk -F: '{ print $1 }' /etc/passwd
+```
+
+Z výpisu vidíme, že Ubuntu používa GNU awk funkcie. Príkaz sa volá `awk`, ale podporuje GNU prepínače typické pre `gawk`.
+
+### 🐧 Ubuntu Linux: samostatný príkaz `mawk`
+
+```text
+miros@MSI-Lektor:~$ mawk
+Usage: mawk [Options] [Program] [file ...]
+
+Program:
+    The -f option value is the name of a file containing program text.
+    If no -f option is given, a "--" ends option processing; the following
+    parameters are the program text.
+
+Options:
+    -f program-file  Program  text is read from file instead of from the
+                     command-line.  Multiple -f options are accepted.
+    -F value         sets the field separator, FS, to value.
+    -v var=value     assigns value to program variable var.
+    --               unambiguous end of options.
+
+    Implementation-specific options are prefixed with "-W".  They can be
+    abbreviated:
+
+    -W version       show version information and exit.
+    -W dump          show assembler-like listing of program and exit.
+    -W help          show this message and exit.
+    -W interactive   set unbuffered output, line-buffered input.
+    -W exec file     use file as program as well as last option.
+    -W random=number set initial random seed.
+    -W sprintf=number adjust size of sprintf buffer.
+    -W posix_space   do not consider "\n" a space.
+    -W usage         show this message and exit.
+```
+
+Tento výpis ukazuje, že na Ubuntu môže byť popri `gawk` dostupný aj samostatný príkaz `mawk`.
+
+### 🐧 Ubuntu Linux: samostatný príkaz `gawk`
+
+```text
+miros@MSI-Lektor:~$ gawk
+Usage: gawk [POSIX or GNU style options] -f progfile [--] file ...
+Usage: gawk [POSIX or GNU style options] [--] 'program' file ...
+POSIX options:          GNU long options: (standard)
+        -f progfile             --file=progfile
+        -F fs                   --field-separator=fs
+        -v var=val              --assign=var=val
+Short options:          GNU long options: (extensions)
+        -b                      --characters-as-bytes
+        -c                      --traditional
+        -C                      --copyright
+        -d[file]                --dump-variables[=file]
+        -D[file]                --debug[=file]
+        -e 'program-text'       --source='program-text'
+        -E file                 --exec=file
+        -g                      --gen-pot
+        -h                      --help
+        -i includefile          --include=includefile
+        -l library              --load=library
+        -L[fatal|invalid|no-ext]        --lint[=fatal|invalid|no-ext]
+        -M                      --bignum
+        -N                      --use-lc-numeric
+        -n                      --non-decimal-data
+        -o[file]                --pretty-print[=file]
+        -O                      --optimize
+        -p[file]                --profile[=file]
+        -P                      --posix
+        -r                      --re-interval
+        -s                      --no-optimize
+        -S                      --sandbox
+        -t                      --lint-old
+        -V                      --version
+
+To report bugs, see node `Bugs' in `gawk.info'
+which is section `Reporting Problems and Bugs' in the
+printed version.  This same information may be found at
+https://www.gnu.org/software/gawk/manual/html_node/Bugs.html.
+PLEASE do NOT try to report bugs by posting in comp.lang.awk,
+or by using a web forum such as Stack Overflow.
+
+gawk is a pattern scanning and processing language.
+By default it reads standard input and writes standard output.
+
+Examples:
+        gawk '{ sum += $1 }; END { print sum }' file
+        gawk -F: '{ print $1 }' /etc/passwd
+```
+
+Tento výpis je prakticky rovnaký ako pri `awk` v Ubuntu, len príkaz je explicitne `gawk`.
+
+### 📋 Vysvetlenie základných POSIX prepínačov
+
+| Prepínač | Použitie | Vysvetlenie |
+|---|---|---|
+| `-f program-file` | `awk -f skript.awk data.txt` | Program awk sa nenačíta z príkazového riadka, ale zo súboru. Vhodné pre dlhšie skripty. |
+| `-F value` | `awk -F: '{ print $1 }' /etc/passwd` | Nastaví vstupný oddeľovač polí `FS`. Často používame `-F,` pre CSV alebo `-F:` pre `/etc/passwd`. |
+| `-v var=value` | `awk -v limit=100 '$1 > limit { print }' data.txt` | Odovzdá hodnotu do awk premennej ešte pred spustením programu, teda aj pred blokom `BEGIN`. |
+| `--` | `awk -- '{ print }' subor.txt` | Jednoznačne ukončí spracovanie prepínačov. Hodí sa pri názvoch súborov alebo programoch, ktoré by mohli začínať znakom `-`. |
+
+### 📋 Vysvetlenie `mawk` prepínačov `-W`
+
+| Prepínač | Význam | Poznámka |
+|---|---|---|
+| `-W version` | Zobrazí verziu `mawk` a skončí. | Používame na overenie, že `awk` je v systéme napojený na `mawk`. |
+| `-W compat` | Zapne správanie kompatibilné so starším awk pred POSIX 2001. | Vhodné iba pri starších skriptoch. Bežne ho nepoužívame. |
+| `-W dump` | Vypíše internú assembler-like reprezentáciu programu a skončí. | Diagnostická voľba, nie bežný tréningový prepínač. |
+| `-W help` | Zobrazí pomocníka. | Podobné ako výpis po spustení bez programu. |
+| `-W interactive` | Nastaví nebufferovaný výstup a riadkovo bufferovaný vstup. | Vhodné pri interaktívnom spracovaní alebo pipe scenároch. |
+| `-W exec file` | Použije súbor ako awk program a zároveň ukončí spracovanie ďalších možností. | Praktické pri spustiteľných awk skriptoch. |
+| `-W posix` | Zapne prísnejšiu POSIX kontrolu. | Vhodné pri testovaní prenositeľnosti skriptov. |
+| `-W random=number` | Nastaví počiatočné semienko generátora náhodných čísel. | Ovplyvňuje funkcie pracujúce s náhodnosťou, napríklad `rand()`. |
+| `-W sprintf=number` | Upraví veľkosť bufferu pre `sprintf`. | Špecifické pre `mawk`; rieši špeciálne prípady formátovania dlhších reťazcov. |
+| `-W posix_space` | Nepovažuje znak nového riadku `\n` za medzeru. | Vo výpise sa objavuje v Ubuntu pri samostatnom `mawk`. |
+| `-W usage` | Zobrazí stručný návod na použitie. | Alternatíva k pomocnému výpisu. |
+
+### 📋 Vysvetlenie `gawk` prepínačov
+
+| Krátky tvar | Dlhý tvar | Vysvetlenie |
+|---|---|---|
+| `-f progfile` | `--file=progfile` | Načíta awk program zo súboru. |
+| `-F fs` | `--field-separator=fs` | Nastaví vstupný oddeľovač polí `FS`. |
+| `-v var=val` | `--assign=var=val` | Nastaví awk premennú pred spustením programu. |
+| `-b` | `--characters-as-bytes` | Spracováva znaky ako bajty, čo môže byť užitočné pri binárnych alebo špecificky kódovaných dátach. |
+| `-c` | `--traditional` | Zapne tradičný režim kompatibility a potláča niektoré GNU rozšírenia. |
+| `-C` | `--copyright` | Zobrazí informácie o autorských právach a skončí. |
+| `-d[file]` | `--dump-variables[=file]` | Vypíše premenné programu, voliteľne do súboru. Užitočné pri diagnostike. |
+| `-D[file]` | `--debug[=file]` | Spustí alebo pripraví debugger pre awk program. |
+| `-e 'program-text'` | `--source='program-text'` | Zadá awk program priamo ako text. Umožňuje kombinovať viac zdrojov programu. |
+| `-E file` | `--exec=file` | Načíta program zo súboru a ukončí spracovanie ďalších prepínačov. Vhodné pre spustiteľné skripty. |
+| `-g` | `--gen-pot` | Vygeneruje POT súbor pre lokalizáciu textov. |
+| `-h` | `--help` | Zobrazí pomocníka a skončí. |
+| `-i includefile` | `--include=includefile` | Vloží ďalší awk zdrojový súbor. GNU rozšírenie vhodné pre väčšie projekty. |
+| `-l library` | `--load=library` | Načíta dynamickú knižnicu alebo rozšírenie. GNU rozšírenie. |
+| `-L[fatal|invalid|no-ext]` | `--lint[=fatal|invalid|no-ext]` | Zapne kontrolu problematických alebo neprenositeľných konštrukcií. `fatal` zmení varovania na chyby. |
+| `-M` | `--bignum` | Zapne podporu veľkých čísel a vyššej presnosti, ak je dostupná. |
+| `-N` | `--use-lc-numeric` | Použije lokálne nastavenie čísel, napríklad desatinnú čiarku podľa locale. |
+| `-n` | `--non-decimal-data` | Umožní interpretovať nedesiatkové číselné dáta. |
+| `-o[file]` | `--pretty-print[=file]` | Vypíše pekne formátovanú verziu awk programu. |
+| `-O` | `--optimize` | Zapne optimalizácie programu. |
+| `-p[file]` | `--profile[=file]` | Vygeneruje profil behu programu, voliteľne do súboru. |
+| `-P` | `--posix` | Zapne POSIX režim a obmedzí GNU rozšírenia. Vhodné pri testovaní prenositeľnosti. |
+| `-r` | `--re-interval` | Zapne intervalové regulárne výrazy. V novších awk implementáciách je často už bežné správanie. |
+| `-s` | `--no-optimize` | Vypne optimalizácie. Užitočné pri ladení alebo porovnávaní správania. |
+| `-S` | `--sandbox` | Zapne sandbox režim. Obmedzuje vybrané operácie so súbormi, pipe a koprocesmi. |
+| `-t` | `--lint-old` | Upozorňuje na konštrukcie, ktoré neboli dostupné v pôvodných starších awk implementáciách. |
+| `-V` | `--version` | Zobrazí verziu `gawk` a skončí. |
+
+### 🧭 Ktoré prepínače používame najčastejšie
+
+Pri bežnej práci vo videu používame hlavne tieto prepínače:
+
+```bash
+awk -F: '{ print $1 }' /etc/passwd
+awk -F, '{ print $1, $4 }' data/employees.csv
+awk -v limit=3000 -F, '$4 >= limit { print $1, $4 }' data/employees.csv
+awk -f script.awk data.txt
+awk --version
+awk -W version
+```
+
+Na začiatok stačí prakticky ovládať `-F`, `-v`, `-f`, `--version` a `-W version`. Ostatné prepínače riešime až pri ladení, kompatibilite, profilovaní alebo špecifických GNU rozšíreniach.
 
 ## 🧠 AWK cheat sheet
 
