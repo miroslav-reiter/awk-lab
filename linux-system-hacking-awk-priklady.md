@@ -1,6 +1,6 @@
 # 🐧 Praktické príklady AWK nad Linux systémom
 
-Tento súbor obsahuje praktické príklady použitia `awk` nad reálnymi systémovými súbormi a výstupmi príkazov v Linuxe. Je určený pre administrátorov, DevOps tímy, znalcov, odborníkov na kybernetickú bezpečnosť, etických hackerov, softvérových testerov a technických uchádzačov na pracovné pohovory.
+Tento súbor obsahuje praktické príklady použitia `awk` nad reálnymi systémovými súbormi a výstupmi príkazov v Linuxe. Je určený pre administrátorov, DevOps tímy, znalcov, odborníkov na kybernetickú bezpečnosť, etických hackerov,  testerov a technických uchádzačov na pracovné pohovory.
 
 ## 🔒 Bezpečnostná poznámka
 
