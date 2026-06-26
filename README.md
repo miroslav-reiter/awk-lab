@@ -1,4 +1,4 @@
-# 🧪 awk-lab
+# 🧪 Online Kurz AWK, MAWK, GAWK (awk-lab)
 
 Testovací repozitár na praktické trénovanie príkazov `awk`, `mawk` a `gawk` v Ubuntu Linuxe a Kali Linuxe.
 
