@@ -2,8 +2,6 @@
 
 Tento súbor obsahuje praktické príklady použitia `awk` nad reálnymi systémovými súbormi a výstupmi príkazov v Linuxe. Je určený pre administrátorov, DevOps tímy, odborníkov na kybernetickú bezpečnosť, etických hackerov, testerov a technických uchádzačov na pracovné pohovory.
 
-Príklady zámerne nepoužívajú `/etc/passwd`, pretože ten je riešený v hlavnom `README.md` a v základných ukážkach.
-
 ## 🔒 Bezpečnostná poznámka
 
 Príkazy v tomto súbore sú určené primárne na čítanie, filtrovanie a analýzu. Pri súboroch ako `/etc/sudoers`, `/etc/ssh/sshd_config`, `/etc/fstab`, logoch a konfiguráciách nemeníme obsah priamo cez `awk` bez zálohy, testovania a znalosti dopadov.
