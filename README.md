@@ -71,7 +71,7 @@ Najčastejšie možnosti:
 
 ### ✅ Odporúčanie pre tento kurz
 
-Pre školenie alebo video o `awk`, `mawk` a `gawk` odporúčame vo Windows používať hlavne **WSL s Ubuntu**. Dôvod je jednoduchý: príkazy, cesty a správanie budú veľmi podobné reálnemu Linuxu.
+Pre školenie odporúčam vo Windows používať hlavne **WSL s Ubuntu**. Dôvod je jednoduchý: príkazy, cesty a správanie budú veľmi podobné reálnemu Linuxu.
 
 Príklad z PowerShellu:
 
