@@ -179,12 +179,6 @@ Pri problémoch s koncami riadkov môžeme súbor skonvertovať napríklad nást
 dos2unix subor.txt
 ```
 
-### 📌 Odporúčaná formulácia do videa
-
-```text
-Vo Windows sa dá awk používať viacerými spôsobmi. Pre tento kurz odporúčam WSL s Ubuntu, pretože sa správa najviac ako Linux. Cygwin, Git Bash a MSYS2 sú použiteľné alternatívy, ale môžu sa líšiť v cestách, shelli a dostupných nástrojoch.
-```
-
 ## ⚙️ Príprava prostredia
 
 ### 🐉 Kali Linux
